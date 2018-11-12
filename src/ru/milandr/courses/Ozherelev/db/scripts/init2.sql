@@ -4,7 +4,7 @@ create table if not exists players (
   country  varchar(30)
 );
 
-DELETE FROM players;
+/*DELETE FROM players;*/
 
 /*script for true result (just a copy of init1.sql)*/
 /*
