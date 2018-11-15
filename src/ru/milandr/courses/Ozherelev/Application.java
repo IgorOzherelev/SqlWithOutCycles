@@ -62,6 +62,7 @@ public class Application {
 
             if (!secondList.get(i).equals(swapperList.remove(i))){
                 flag = false;
+                return flag;
             }
             i++;
             goThroughList(firstList, secondList, i);
