@@ -25,9 +25,7 @@ public class Application {
     private static ResultSet secondResultSet;
 
 
-    private static boolean compareLists(List<?> firstList, List<?>secondList){
-
-        boolean flag;
+    private static void compareLists(List<?> firstList, List<?>secondList, int i, boolean flag){
         int sizeFirst = firstList.size();
         int sizeSecond = secondList.size();
 
@@ -36,39 +34,31 @@ public class Application {
         }
 
         else{
-            flag = goThroughList(firstList, secondList, 0);
-        }
-
-        return flag;
-    }
-
-    private static boolean goThroughList(List<?> firstList, List<?>secondList, int i){
-
-        int sizeList = firstList.size();
-        List<?> swapperList = firstList;
-        boolean flag = true;
-
-        if (sizeList == 0)
-        {
-            System.out.println("Empty tables");
-            System.exit(-1);
-        }
-
-        if ((i >= sizeList) && (sizeList != 0)){
-            return flag;
-        }
-
-        else{
-
-            if (!secondList.get(i).equals(swapperList.remove(i))){
-                flag = false;
-                return flag;
+            int sizeList = firstList.size();
+            List<?> swapperList = new ArrayList(firstList);
+            if (sizeList == 0)
+            {
+                System.out.println("Empty tables");
+                System.exit(-1);
             }
-            i++;
-            goThroughList(firstList, secondList, i);
-        }
 
-        return flag;
+            if ((i >= sizeList) && (sizeList != 0)){
+                System.out.println(flag);
+                System.exit(0);
+            }
+
+            else{
+
+                if (!secondList.get(i).equals(swapperList.remove(i))){
+                    flag = false;
+                }
+            }
+        }
+        i++;
+        if (i == sizeFirst + 1){
+            System.exit(0);
+        }
+        compareLists(firstList, secondList, i, flag);
     }
 
     private static int getLastRowIndex(ResultSet resultSet){
@@ -187,7 +177,10 @@ public class Application {
             List databaseFirstList = getListFromResultSet(firstResultSet, columnNames);
             List databaseSecondList = getListFromResultSet(secondResultSet, columnNames);
 
-            System.out.println(compareLists(databaseFirstList, databaseSecondList));
+
+            //System.out.println(databaseFirstList);
+            //System.out.println(databaseSecondList);
+            compareLists(databaseFirstList, databaseSecondList, 0, true);
 
         } catch (SQLException error) {
             error.printStackTrace();
